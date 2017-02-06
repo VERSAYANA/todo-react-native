@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, View, TouchableNativeFeedback, Text, ScrollView } from 'react-native';
+import { StyleSheet, Button, View, TouchableNativeFeedback, Text, ScrollView, TextInput } from 'react-native';
 
 export default class ListsComponent extends React.Component {
+
   static navigationOptions = {
     title: 'Lists'
   };
 
   render() {
     const { navigate } = this.props.navigation;
-    const { lists, deleteList } = this.props;
+    const { lists, deleteList, createList } = this.props;
     return (
-      <ScrollView>
+        <View style={{justifyContent: 'space-between', flex: 1}}>
+
+          <ScrollView>
+
         {lists.map((l,i) =>
           <View key={i} style={s.listRow}>
 
@@ -32,14 +36,44 @@ export default class ListsComponent extends React.Component {
             </TouchableNativeFeedback>
 
           </View>
-
         )}
-      </ScrollView>
+
+    </ScrollView>
+
+
+
+      <View>
+
+        <TextInput
+          style={s.input}
+          placeholder="Create List"
+          placeholderTextColor="white"
+          ref='create-list'
+          underlineColorAndroid='#F4511E'
+          onSubmitEditing={(v) => {createList(v.nativeEvent.text);
+            this.refs['create-list'].setNativeProps({text: ''});
+            this.refs['create-list'].blur();
+          }}
+        />
+
+      </View>
+
+      </View>
     )
   }
 }
 
 const s = StyleSheet.create({
+  // inputContainer: {
+  // height: 70
+  // },
+  input: {
+    height: 50,
+    backgroundColor: '#F4511E',
+    paddingLeft: 15,
+    paddingRight: 15,
+    color: 'white',
+  },
   listRow: {
     flexDirection: 'row',
     height: 50,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, View, Text, Switch, StyleSheet, TextInput } from 'react-native';
-import CheckBox from 'react-native-checkbox';
+import CheckBox from 'react-native-icon-checkbox';
 
 export default class TodosComponent extends React.Component {
   static navigationOptions = {
@@ -13,7 +13,9 @@ export default class TodosComponent extends React.Component {
     return (
       <View>
         <TextInput
+          style={s.input}
           placeholder="Add New Todo"
+          placeholderTextColor="white"
           ref={title}
           onSubmitEditing={(v) => {addTodo(v.nativeEvent.text, title);
             this.refs[title].setNativeProps({text: ''});
@@ -28,8 +30,10 @@ export default class TodosComponent extends React.Component {
           <CheckBox
             key={i}
             label={x.text}
+            color="red"
+            iconStyle={{color: 'blue'}}
             checked={x.completed}
-            onChange={a => complete(x.id)}
+            onPress={a => complete(x.id)}
             labelStyle={{textDecorationLine: x.completed ? 'line-through' : 'none'}}
           />
       )}
@@ -38,6 +42,12 @@ export default class TodosComponent extends React.Component {
   }
 }
 
-// const s = StyleSheet.create({
-//   bavk
-// })
+const s = StyleSheet.create({
+  input: {
+    height: 50,
+    backgroundColor: '#F4511E',
+    paddingLeft: 15,
+    paddingRight: 15,
+    color: 'white',
+  },
+});

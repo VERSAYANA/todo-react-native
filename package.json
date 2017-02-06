@@ -7,10 +7,9 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"native-base": "^2.0.1",
 		"react": "~15.4.0-rc.4",
-		"react-native": "0.41.1",
-		"react-native-checkbox": "^1.1.0",
-		"react-native-material-switch": "^0.0.4",
+		"react-native": "0.41.2",
 		"react-navigation": "^1.0.0-beta.1",
 		"react-redux": "^5.0.2",
 		"redux": "^3.6.0"
