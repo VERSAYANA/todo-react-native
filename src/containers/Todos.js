@@ -9,7 +9,7 @@ import TodosComponent from "../components/TodosComponent";
 //   return todos.filter(x => x.list === list || list === "All");
 // };
 const listTodos = (todos, title) => {
-  return todos.filter(x => x.list === title);
+  return todos.filter(x => x.list === title || title === 'All');
 }
 const fTodos = (todos, filter) => {
   if(filter) {
