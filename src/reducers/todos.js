@@ -22,26 +22,7 @@ const todo = (state, action) => {
   }
 };
 
-const todos = (state = [
-    {
-      text: 'wqeewqweq',
-      completed: false,
-      list: 'All',
-      id: 0
-    },
-    {
-      text: 'asdsdsda',
-      completed: false,
-      list: 'All',
-      id: 1
-    },
-    {
-      text: 'asdsadsda',
-      completed: false,
-      list: 'Buy List',
-      id: 2
-    }
-  ], action) => {
+const todos = (state = [], action) => {
   switch (action.type) {
     case "ADD_TODO":
       return [...state, todo(undefined, action)];

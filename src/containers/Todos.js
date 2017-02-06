@@ -9,9 +9,12 @@ import TodosComponent from "../components/TodosComponent";
 //   return todos.filter(x => x.list === list || list === "All");
 // };
 const listTodos = (todos, title) => {
-  console.log(title);
-  console.log(todos);
   return todos.filter(x => x.list === title);
+}
+const fTodos = (todos, filter) => {
+  if(filter) {
+    return [...todos.filter(x => !x.completed), ...todos.filter(x => x.completed)]
+  } else return todos.filter(x => !x.completed)
 }
 // const log = (state, props) => {
 //   console.log(props.navigation.state.params.title)
@@ -20,8 +23,8 @@ const mapStateToProps = (state, props) => ({
   // filter: state.filter,
   // list: currentTag(state.lists, props.match),
   // todos: listTodos(currentTag(state.lists, props.match), state.todos)
-  todos: listTodos(state.todos, props.navigation.state.params.title)
-  // log: log(state, props)
+  todos: fTodos(listTodos(state.todos, props.navigation.state.params.title), state.filter),
+  filter: state.filter,
 });
 
 let nextTodoId = 0;

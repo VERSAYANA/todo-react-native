@@ -18,8 +18,8 @@ export default class ListsComponent extends React.Component {
         {lists.map((l,i) =>
           <Button
             key={i}
-           onPress={() => navigate('Todos', {title: l.title})}
-           title={l.title}
+            onPress={() => navigate('Todos', {title: l.title})}
+            title={l.title}
          />
        )}
       </View>
