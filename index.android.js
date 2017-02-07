@@ -10,7 +10,7 @@ import devToolsEnhancer from 'remote-redux-devtools';
 const store = createStore(reducer, devToolsEnhancer());
 
 
-const NativeConverter = () => {
+const NativeTodo = () => {
     return (
       <Provider store={store}>
         <App />
@@ -22,4 +22,4 @@ export default
 
 
 
-AppRegistry.registerComponent('NativeConverter', () => NativeConverter);
+AppRegistry.registerComponent('NativeConverter', () => NativeTodo);
