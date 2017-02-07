@@ -49,7 +49,7 @@ export default class ListsComponent extends React.Component {
           placeholder="Create List"
           placeholderTextColor="white"
           ref='create-list'
-          underlineColorAndroid='#F4511E'
+          underlineColorAndroid='#26C6DA'
           onSubmitEditing={(v) => {createList(v.nativeEvent.text);
             this.refs['create-list'].setNativeProps({text: ''});
             this.refs['create-list'].blur();
@@ -69,21 +69,22 @@ const s = StyleSheet.create({
   // },
   input: {
     height: 50,
-    backgroundColor: '#F4511E',
+    backgroundColor: '#26C6DA',
     paddingLeft: 15,
     paddingRight: 15,
     color: 'white',
   },
   listRow: {
     flexDirection: 'row',
-    height: 50,
+    height: 45,
     borderBottomColor: '#E0E0E0',
     borderBottomWidth: 1,
 
+
   },
   closeContainer: {
-    width: 50,
-    backgroundColor: '#F4511E',
+    width: 45,
+    backgroundColor: '#EC407A',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -99,15 +100,15 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   listTitle: {
-    marginLeft: 8,
+    marginLeft: 10,
     color: 'black',
   },
   listAll: {
-    marginLeft: 58,
+    marginLeft: 60,
     color: 'black',
   },
   listCounter: {
-    marginRight: 8,
+    marginRight: 10,
     color: 'black',
   },
 

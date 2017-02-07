@@ -67,7 +67,7 @@ const s = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: '#F4511E',
+    backgroundColor: '#26C6DA',
     paddingLeft: 15,
     paddingRight: 15,
     color: 'white',
@@ -75,11 +75,11 @@ const s = StyleSheet.create({
   itemContainer: {
     backgroundColor: 'white',
     borderBottomColor: '#E0E0E0',
-    height: 50,
+    height: 45,
     justifyContent: 'center',
     borderBottomWidth: 1,
     marginBottom: 0,
-    paddingLeft: 8,
+    paddingLeft: 10,
     justifyContent: 'flex-start',
   }
 });
