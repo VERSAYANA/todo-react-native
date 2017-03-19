@@ -6,9 +6,9 @@ import App from './src/App';
 import reducer from './src/reducers';
 import devToolsEnhancer from 'remote-redux-devtools';
 
-import { createStore } from "redux";
-import { ApolloClient, ApolloProvider } from 'react-apollo';
-
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
+import filter from './src/reducers/filter';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj0glz8cz8soy013606fq2z0z' }),
@@ -16,8 +16,7 @@ const client = new ApolloClient({
 
 const store = createStore(
   combineReducers({
-    todos: todoReducer,
-    users: userReducer,
+    filter: filter,
     apollo: client.reducer(),
   }),
   {}, // initial state
@@ -31,9 +30,9 @@ const store = createStore(
 
 const NativeTodo = () => {
     return (
-      <Provider store={store}>
+      <ApolloProvider store={store} client={client}>
         <App />
-      </Provider>
+      </ApolloProvider>
     );
 };
 
