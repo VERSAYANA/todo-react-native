@@ -4,7 +4,7 @@ import { AppRegistry } from 'react-native';
 import { Provider } from "react-redux";
 import App from './src/App';
 import reducer from './src/reducers';
-import devToolsEnhancer from 'remote-redux-devtools';
+// import devToolsEnhancer from 'remote-redux-devtools';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
@@ -36,8 +36,4 @@ const NativeTodo = () => {
     );
 };
 
-export default
-
-
-
-AppRegistry.registerComponent('NativeConverter', () => NativeTodo);
+export default AppRegistry.registerComponent('NativeConverter', () => NativeTodo);
