@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 
 //
 const App = StackNavigator({
-  Lists: { screen: Lists }
-//   Todos: { screen: Todos }
+  Lists: { screen: Lists },
+  Todos: { screen: Todos }
 })
 
 // const App = (props) => (

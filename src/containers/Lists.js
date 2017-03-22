@@ -38,6 +38,7 @@ import ListsComponent from '../components/ListsComponent';
 const MyQuery = gql`query {
   allLists {
     title
+		id
   }
 }`;
 const Lists = graphql(MyQuery)(ListsComponent);

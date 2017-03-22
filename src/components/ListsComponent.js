@@ -36,7 +36,8 @@ export default class ListsComponent extends React.Component {
             }
 
             <TouchableNativeFeedback
-                background={TouchableNativeFeedback.SelectableBackground()}>
+                background={TouchableNativeFeedback.SelectableBackground()}
+								onPress={() => navigate('Todos', { id: l.id })}>
               <View style={s.listContianer}>
                 <Text style={l.title !== 'All' ? s.listTitle : s.listAll}>{l.title}</Text>
 
