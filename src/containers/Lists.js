@@ -39,7 +39,7 @@ const MyQuery = gql`query {
   allLists {
     title
   }
-}`
-const Lists = graphql(ListsComponent)
+}`;
+const Lists = graphql(MyQuery)(ListsComponent);
 
 export default Lists;

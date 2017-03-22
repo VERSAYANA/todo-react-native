@@ -8,9 +8,18 @@ export default class ListsComponent extends React.Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
-    const { lists, deleteList, createList } = this.props;
-    return (
+    // const { navigate } = this.props.navigation;
+    // const { lists, deleteList, createList } = this.props;
+	// console.log(this.props.data.allLists);
+	if (this.props.data.loading) {
+	return (<Text>Loading</Text>)
+	}
+	const lists = this.props.data.allLists;
+	console.log(lists);
+
+	// if(lists) {
+		return (
+
         <View style={{justifyContent: 'space-between', flex: 1}}>
 
           <ScrollView>
@@ -19,7 +28,7 @@ export default class ListsComponent extends React.Component {
           <View key={i} style={s.listRow}>
 
             {l.title !== 'All' ? (
-              <TouchableNativeFeedback onPress={() => {deleteList(l.title)}}>
+              <TouchableNativeFeedback>
                 <View style={s.closeContainer}>
                   <Text style={s.close}>&times;</Text>
                 </View>
@@ -27,11 +36,10 @@ export default class ListsComponent extends React.Component {
             }
 
             <TouchableNativeFeedback
-                background={TouchableNativeFeedback.SelectableBackground()}
-                onPress={() => navigate('Todos', { title: l.title })}>
+                background={TouchableNativeFeedback.SelectableBackground()}>
               <View style={s.listContianer}>
                 <Text style={l.title !== 'All' ? s.listTitle : s.listAll}>{l.title}</Text>
-                <Text style={s.listCounter}>{l.count}</Text>
+
               </View>
             </TouchableNativeFeedback>
 
@@ -50,17 +58,15 @@ export default class ListsComponent extends React.Component {
           placeholderTextColor="white"
           ref='create-list'
           underlineColorAndroid='#26C6DA'
-          onSubmitEditing={(v) => {createList(v.nativeEvent.text);
-            this.refs['create-list'].setNativeProps({text: ''});
-            this.refs['create-list'].blur();
-          }}
         />
 
       </View>
 
       </View>
-    )
-  }
+		)
+
+
+}
 }
 
 const s = StyleSheet.create({
@@ -111,6 +117,5 @@ const s = StyleSheet.create({
     marginRight: 10,
     color: 'black',
   },
-
 
 })
