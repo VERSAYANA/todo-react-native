@@ -35,6 +35,13 @@ import ListsComponent from '../components/ListsComponent';
 //     title
 //   })
 // };
+const MyQuery = gql`query MyLists {
+  allLists {
+    title
+		id
+  }
+}`;
+
 const MyMutation = gql`mutation createNewList($title: String!) {
   createList(title: $title) {
     title
@@ -42,15 +49,24 @@ const MyMutation = gql`mutation createNewList($title: String!) {
   }
 }`
 
-const MyQuery = gql`query {
-  allLists {
-    title
-		id
-  }
-}`;
+
 export default compose(
   graphql(MyQuery),
-  graphql(MyMutation)
+  graphql(MyMutation,{
+  options: {
+    updateQueries: {
+      MyLists: (previousData, { mutationResult }) => {
+        const newList = mutationResult.data.createList;
+        // Note how we return a new copy of `previousData` instead of mutating
+        // it. This is just like a Redux reducer!
+        return {
+          ...previousData,
+          allLists: [...previousData.allLists,newList],
+        };
+      },
+    },
+  },
+	})
 )(ListsComponent);
 // const Lists = graphql(MyQuery)(ListsComponent);
 //
