@@ -35,12 +35,23 @@ import ListsComponent from '../components/ListsComponent';
 //     title
 //   })
 // };
+const MyMutation = gql`mutation createNewList($title: String!) {
+  createList(title: $title) {
+    title
+		id
+  }
+}`
+
 const MyQuery = gql`query {
   allLists {
     title
 		id
   }
 }`;
-const Lists = graphql(MyQuery)(ListsComponent);
-
-export default Lists;
+export default compose(
+  graphql(MyQuery),
+  graphql(MyMutation)
+)(ListsComponent);
+// const Lists = graphql(MyQuery)(ListsComponent);
+//
+// export default Lists;

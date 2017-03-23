@@ -8,16 +8,16 @@ export default class ListsComponent extends React.Component {
   };
 
   render() {
-    // const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation;
     // const { lists, deleteList, createList } = this.props;
 	// console.log(this.props.data.allLists);
 	if (this.props.data.loading) {
 	return (<Text>Loading</Text>)
 	}
+	console.log(this.props)
 	const lists = this.props.data.allLists;
-	console.log(lists);
+	// console.log(lists);
 
-	// if(lists) {
 		return (
 
         <View style={{justifyContent: 'space-between', flex: 1}}>
@@ -59,8 +59,11 @@ export default class ListsComponent extends React.Component {
           placeholderTextColor="white"
           ref='create-list'
           underlineColorAndroid='#26C6DA'
+					onSubmitEditing={(v) => {this.props.mutate({ variables: { title: v.nativeEvent.text } }).then(({ data }) => {console.log('got data', data)});
+						this.refs['create-list'].setNativeProps({text: ''});
+						this.refs['create-list'].blur();
+					}}
         />
-
       </View>
 
       </View>

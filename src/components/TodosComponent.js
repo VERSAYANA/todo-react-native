@@ -3,13 +3,19 @@ import { Button, View, Text, Switch, StyleSheet, TextInput } from 'react-native'
 import CheckBox from 'react-native-checkbox';
 
 export default class TodosComponent extends React.Component {
-  static navigationOptions = {
-  title: ({ state }) => state.params.title
-};
+//   static navigationOptions = {
+//   title: ({ state }) => state.params.title
+// };
 
   render() {
-    const { todos, filter, toggleFilter, complete, addTodo } = this.props;
-    const { title } = this.props.navigation.state.params
+    // const { todos, filter, toggleFilter, complete, addTodo } = this.props;
+    // const { title } = this.props.navigation.state.params
+		if(this.props.data.loading) {
+			return (<Text>Loading</Text>)
+		}
+		// console.log(this.props)
+		const todos = this.props.data.List.todoes;
+		const { filter, toggleFilter } = this.props;
     return (
       <View style={{flex:1, justifyContent: 'space-between'}}>
 
@@ -32,7 +38,6 @@ export default class TodosComponent extends React.Component {
               label={x.text}
               checked={x.completed}
               labelStyle={{textDecorationLine: x.completed ? 'line-through' : 'none'}}
-              onChange={() => {complete(x.id)}}
               checkboxStyle={{height: 20, width: 20}}
             />
           // </View>
@@ -43,11 +48,6 @@ export default class TodosComponent extends React.Component {
         style={s.input}
         placeholder="Add New Todo"
         placeholderTextColor="white"
-        ref={title}
-        onSubmitEditing={(v) => {addTodo(v.nativeEvent.text, title);
-          this.refs[title].setNativeProps({text: ''});
-          this.refs[title].blur();
-        }}
       />
       </View>
     )
