@@ -3,9 +3,9 @@ import { Button, View, Text, Switch, StyleSheet, TextInput } from 'react-native'
 import CheckBox from 'react-native-checkbox';
 
 export default class todoesComponent extends React.Component {
-//   static navigationOptions = {
-//   title: ({ state }) => state.params.title
-// };
+  static navigationOptions = {
+  title: ({ state }) => state.params.title
+};
 
   render() {
     // const { todoes, filter, toggleFilter, complete, addTodo } = this.props;
@@ -13,8 +13,8 @@ export default class todoesComponent extends React.Component {
 		if(this.props.data.loading) {
 			return (<Text>Loading</Text>)
 		}
-		// console.log(this.props)
-		const todoes = this.props.data.List.todoes;
+		console.log(this.props)
+		const todoes = this.props.data.List;
 		const { filter, toggleFilter, id } = this.props;
     return (
       <View style={{flex:1, justifyContent: 'space-between'}}>
@@ -30,7 +30,7 @@ export default class todoesComponent extends React.Component {
       </View>
 
 
-        {todoes.map((x,i) =>
+        {todoes.notCompleted.map((x,i) =>
           // <View >
             <CheckBox
               containerStyle={s.itemContainer}
@@ -39,9 +39,45 @@ export default class todoesComponent extends React.Component {
               checked={x.completed}
               labelStyle={{textDecorationLine: x.completed ? 'line-through' : 'none'}}
               checkboxStyle={{height: 20, width: 20}}
+							onChange={() => {this.props.completeTodo({
+								variables: { id: x.id, completed: true },
+								optimisticResponse: {
+									updateTodo: {
+										text: x.text,
+										completed: true,
+										id: x.id,
+										__typename: 'Todo',
+									},
+								},
+							})}}
             />
           // </View>
       )}
+
+        {filter ? (todoes.completed.map((x,i) =>
+          // <View >
+            <CheckBox
+              containerStyle={s.itemContainer}
+              key={i}
+              label={x.text}
+              checked={x.completed}
+              labelStyle={{textDecorationLine: x.completed ? 'line-through' : 'none'}}
+              checkboxStyle={{height: 20, width: 20}}
+							onChange={() => {this.props.completeTodo({
+								variables: { id: x.id, completed: false },
+								optimisticResponse: {
+									updateTodo: {
+										text: x.text,
+										completed: false,
+										id: x.id,
+										__typename: 'Todo'
+									},
+								},
+							})}}
+            />
+          // </View>
+      )) : (<View/>)}
+
     </View>
 
 		<TextInput
@@ -55,9 +91,11 @@ export default class todoesComponent extends React.Component {
 					createTodo: {
 						id: -1,
 						text: v.nativeEvent.text,
+						completed: false,
 						__typename: 'Todo'
 					},
 				},
+
 			 }).then(({ data }) => {console.log('got data', data)});
 				this.refs['title'].setNativeProps({text: ''});
 				this.refs['title'].blur();
@@ -67,6 +105,7 @@ export default class todoesComponent extends React.Component {
     )
   }
 }
+
 
 const s = StyleSheet.create({
   switchContainer: {

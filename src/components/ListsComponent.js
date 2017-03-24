@@ -14,7 +14,7 @@ export default class ListsComponent extends React.Component {
 	if (this.props.data.loading) {
 	return (<Text>Loading</Text>)
 	}
-	console.log(this.props)
+	// console.log(this.props)
 	const lists = this.props.data.allLists;
 	// console.log(lists);
 
@@ -45,7 +45,7 @@ export default class ListsComponent extends React.Component {
 
             <TouchableNativeFeedback
                 background={TouchableNativeFeedback.SelectableBackground()}
-								onPress={() => navigate('Todos', { id: l.id })}>
+								onPress={() => navigate('Todos', { id: l.id, title: l.title })}>
               <View style={s.listContianer}>
                 <Text style={l.title !== 'All' ? s.listTitle : s.listAll}>{l.title}</Text>
 
@@ -76,7 +76,7 @@ export default class ListsComponent extends React.Component {
 								__typename: 'List'
 		          },
 		        },
-					 }).then(({ data }) => {console.log('got data', data)});
+					 }).then(({ data }) => {});
 						this.refs['create-list'].setNativeProps({text: ''});
 						this.refs['create-list'].blur();
 					}}
