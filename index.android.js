@@ -12,6 +12,13 @@ import filter from './src/reducers/filter';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj0glz8cz8soy013606fq2z0z' }),
+	addTypename: true,
+    dataIdFromObject: (result) => {
+        if (result.id && result.__typename) {
+            return result.__typename + result.id
+        }
+        return null
+    }
 });
 
 const store = createStore(

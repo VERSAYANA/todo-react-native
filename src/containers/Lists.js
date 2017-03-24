@@ -42,17 +42,25 @@ const MyQuery = gql`query MyLists {
   }
 }`;
 
-const MyMutation = gql`mutation createNewList($title: String!) {
+const CreateNewList = gql`mutation createNewList($title: String!) {
   createList(title: $title) {
     title
 		id
   }
 }`
 
+const DeleteList = gql`mutation DeleteList($id: ID!) {
+  deleteList(id: $id) {
+    id
+    title
+  }
+}`
+
 
 export default compose(
   graphql(MyQuery),
-  graphql(MyMutation,{
+  graphql(CreateNewList, {
+	name: 'createList',
   options: {
     updateQueries: {
       MyLists: (previousData, { mutationResult }) => {
@@ -66,6 +74,9 @@ export default compose(
       },
     },
   },
+	}),
+	graphql(DeleteList, {
+		name: 'deleteList'
 	})
 )(ListsComponent);
 // const Lists = graphql(MyQuery)(ListsComponent);

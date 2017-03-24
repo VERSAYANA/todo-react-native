@@ -59,7 +59,16 @@ export default class ListsComponent extends React.Component {
           placeholderTextColor="white"
           ref='create-list'
           underlineColorAndroid='#26C6DA'
-					onSubmitEditing={(v) => {this.props.mutate({ variables: { title: v.nativeEvent.text } }).then(({ data }) => {console.log('got data', data)});
+					onSubmitEditing={(v) => {this.props.createList({
+						variables: { title: v.nativeEvent.text },
+						optimisticResponse: {
+		          createList: {
+		            id: -1, // A temporary id. The server decides the real id.
+		            title: v.nativeEvent.text,
+								__typename: 'List'
+		          },
+		        },
+					 }).then(({ data }) => {console.log('got data', data)});
 						this.refs['create-list'].setNativeProps({text: ''});
 						this.refs['create-list'].blur();
 					}}
