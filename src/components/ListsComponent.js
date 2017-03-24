@@ -28,7 +28,15 @@ export default class ListsComponent extends React.Component {
           <View key={i} style={s.listRow}>
 
             {l.title !== 'All' ? (
-              <TouchableNativeFeedback>
+              <TouchableNativeFeedback onPress={() => {this.props.deleteList({
+									variables: { id: l.id },
+									optimisticResponse: {
+										deleteList: {
+											title: l.title,
+											__typename: 'List'
+										},
+									},
+								})}}>
                 <View style={s.closeContainer}>
                   <Text style={s.close}>&times;</Text>
                 </View>

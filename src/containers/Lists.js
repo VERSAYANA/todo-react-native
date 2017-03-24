@@ -47,14 +47,13 @@ const CreateNewList = gql`mutation createNewList($title: String!) {
     title
 		id
   }
-}`
+}`;
 
 const DeleteList = gql`mutation DeleteList($id: ID!) {
   deleteList(id: $id) {
-    id
     title
   }
-}`
+}`;
 
 
 export default compose(
@@ -76,7 +75,18 @@ export default compose(
   },
 	}),
 	graphql(DeleteList, {
-		name: 'deleteList'
+		name: 'deleteList',
+		options: {
+			updateQueries: {
+				MyLists: (previousData, { mutationResult }) => {
+					const deletedList = mutationResult.data.deleteList;
+					return {
+						...previousData,
+						allLists: previousData.allLists.filter(l => l.title !== deletedList.title),
+					};
+				},
+			},
+		},
 	})
 )(ListsComponent);
 // const Lists = graphql(MyQuery)(ListsComponent);
