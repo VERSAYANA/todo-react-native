@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import { Button, View, Text, Switch, StyleSheet, TextInput } from 'react-native';
 import CheckBox from 'react-native-checkbox';
 
-export default class TodosComponent extends React.Component {
+export default class todoesComponent extends React.Component {
 //   static navigationOptions = {
 //   title: ({ state }) => state.params.title
 // };
 
   render() {
-    // const { todos, filter, toggleFilter, complete, addTodo } = this.props;
+    // const { todoes, filter, toggleFilter, complete, addTodo } = this.props;
     // const { title } = this.props.navigation.state.params
 		if(this.props.data.loading) {
 			return (<Text>Loading</Text>)
 		}
 		// console.log(this.props)
-		const todos = this.props.data.List.todoes;
-		const { filter, toggleFilter } = this.props;
+		const todoes = this.props.data.List.todoes;
+		const { filter, toggleFilter, id } = this.props;
     return (
       <View style={{flex:1, justifyContent: 'space-between'}}>
 
         <View>
         <View style={s.switchContainer}>
-          <Text style={{marginLeft: 8}}>Show Completed Todos</Text>
+          <Text style={{marginLeft: 8}}>Show Completed todoes</Text>
         <Switch
           style={{marginRight: 8}}
           value={filter}
@@ -30,7 +30,7 @@ export default class TodosComponent extends React.Component {
       </View>
 
 
-        {todos.map((x,i) =>
+        {todoes.map((x,i) =>
           // <View >
             <CheckBox
               containerStyle={s.itemContainer}
@@ -44,11 +44,25 @@ export default class TodosComponent extends React.Component {
       )}
     </View>
 
-      <TextInput
-        style={s.input}
-        placeholder="Add New Todo"
-        placeholderTextColor="white"
-      />
+		<TextInput
+			style={s.input}
+			placeholder="Add New Todo"
+			placeholderTextColor="white"
+			ref='title'
+			onSubmitEditing={(v) => {this.props.newTodo({
+				variables: { text: v.nativeEvent.text, listId: id },
+				optimisticResponse: {
+					createTodo: {
+						id: -1,
+						text: v.nativeEvent.text,
+						__typename: 'Todo'
+					},
+				},
+			 }).then(({ data }) => {console.log('got data', data)});
+				this.refs['title'].setNativeProps({text: ''});
+				this.refs['title'].blur();
+			}}
+		/>
       </View>
     )
   }

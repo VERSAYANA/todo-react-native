@@ -2,14 +2,14 @@ import { connect } from "react-redux";
 import { gql, graphql, compose } from 'react-apollo';
 import TodosComponent from "../components/TodosComponent";
 
-const NewTodo = gql`mutation CreateTodo($text: String!, listId: ID!) {
-  createTodo(text: $text, id: $id){
+const NewTodo = gql`mutation CreateTodo($text: String!, $listId: ID!) {
+  createTodo(text: $text, listId: $listId){
     text
 		id
   }
 }`
 
-const MyQuery = gql`query MyList($id: ID!) {
+const MyQuery = gql`query MyTodoes($id: ID!) {
   List(id: $id) {
     todoes {
       text
@@ -43,6 +43,22 @@ export default compose(
 			},
 		}),
 	}),
-	graphql(NewTodo)
+	graphql(NewTodo, {
+		name: 'newTodo',
+		options: {
+			updateQueries: {
+				MyTodoes: (previousData, { mutationResult }) => {
+					const newTodo = mutationResult.data.createTodo;
+					return {
+						...previousData,
+						List: {
+							...previousData.List,
+							todoes: [...previousData.List.todoes,newTodo]
+						}
+					};
+				},
+			},
+		}
+	}),
   connect(mapStateToProps, mapDispatchToProps)
 )(TodosComponent);
