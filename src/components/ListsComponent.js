@@ -9,14 +9,11 @@ export default class ListsComponent extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    // const { lists, deleteList, createList } = this.props;
-	// console.log(this.props.data.allLists);
+
 	if (this.props.data.loading) {
 	return (<Text>Loading</Text>)
 	}
-	// console.log(this.props)
-	const lists = this.props.data.allLists;
-	// console.log(lists);
+	const lists = this.props.data.User.lists;
 
 		return (
 
@@ -85,15 +82,11 @@ export default class ListsComponent extends React.Component {
 
       </View>
 		)
-
-
-}
+	}
 }
 
 const s = StyleSheet.create({
-  // inputContainer: {
-  // height: 70
-  // },
+
   input: {
     height: 50,
     backgroundColor: '#26C6DA',

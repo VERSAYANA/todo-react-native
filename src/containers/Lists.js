@@ -3,42 +3,13 @@ import { connect } from 'react-redux';
 import { gql, graphql, compose } from 'react-apollo';
 import ListsComponent from '../components/ListsComponent';
 
-// const getNumber = (todos, list) => {
-//   return todos.reduce(
-//     (num, x) => {
-//       return (list.title === x.list || list.title === "All") && !x.completed
-//         ? num + 1
-//         : num;
-//     },
-//     0
-//   );
-// };
-//
-// const number = (todos, lists) => {
-//   return lists.map(x => ({
-//     ...x,
-//     count: getNumber(todos, x) || ''
-//   }))
-// }
-//
-// const mapStateToProps = state => ({
-//   lists: number(state.todos, state.lists)
-//   // lists: state.lists
-// });
-// const mapDispatchToProps = {
-//   createList: title => ({
-//     type: "CREATE_LIST",
-//     title
-//   }),
-//   deleteList: title => ({
-//     type: "DELETE_LIST",
-//     title
-//   })
-// };
-const MyQuery = gql`query MyLists {
-  allLists {
-    title
-		id
+
+const MyQuery = gql`query MyQuery($userId: String!){
+  User(auth0UserId: $userId) {
+    lists {
+      title
+			id
+    }
   }
 }`;
 
@@ -57,15 +28,20 @@ const DeleteList = gql`mutation DeleteList($id: ID!) {
 
 
 export default compose(
-  graphql(MyQuery),
+	graphql(MyQuery, {
+		options: (props) => ({
+			variables: {
+				userId: props.screenProps
+			},
+		}),
+	}),
   graphql(CreateNewList, {
 	name: 'createList',
   options: {
     updateQueries: {
       MyLists: (previousData, { mutationResult }) => {
         const newList = mutationResult.data.createList;
-        // Note how we return a new copy of `previousData` instead of mutating
-        // it. This is just like a Redux reducer!
+
         return {
           ...previousData,
           allLists: [...previousData.allLists,newList],
@@ -89,6 +65,3 @@ export default compose(
 		},
 	})
 )(ListsComponent);
-// const Lists = graphql(MyQuery)(ListsComponent);
-//
-// export default Lists;

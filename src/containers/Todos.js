@@ -34,10 +34,6 @@ const MyQuery = gql`query MyTodoes($id: ID!) {
 }`;
 
 
-// const gifID = (props) => {
-// 	console.log(props.navigation.state.params.id);
-// 	return props.navigation.state.params.id
-// }
 
 const mapStateToProps = (state, props) => ({
   filter: state.filter,

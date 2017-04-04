@@ -8,8 +8,7 @@ export default class todoesComponent extends React.Component {
 };
 
   render() {
-    // const { todoes, filter, toggleFilter, complete, addTodo } = this.props;
-    // const { title } = this.props.navigation.state.params
+
 		if(this.props.data.loading) {
 			return (<Text>Loading</Text>)
 		}
@@ -51,11 +50,9 @@ export default class todoesComponent extends React.Component {
 								},
 							})}}
             />
-          // </View>
       )}
 
         {filter ? (todoes.completed.map((x,i) =>
-          // <View >
             <CheckBox
               containerStyle={s.itemContainer}
               key={i}
@@ -75,7 +72,6 @@ export default class todoesComponent extends React.Component {
 								},
 							})}}
             />
-          // </View>
       )) : (<View/>)}
 
     </View>
@@ -115,7 +111,6 @@ const s = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomColor: '#E0E0E0',
     height: 50,
-    // justifyContent: 'center',
     borderBottomWidth: 1,
   },
   input: {

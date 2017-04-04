@@ -2,13 +2,14 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from "react-redux";
-import App from './src/App';
+import App from './src/App'
 import reducer from './src/reducers';
 // import devToolsEnhancer from 'remote-redux-devtools';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
 import filter from './src/reducers/filter';
+import userId from './src/reducers/userId';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj0glz8cz8soy013606fq2z0z' }),
@@ -24,6 +25,7 @@ const client = new ApolloClient({
 const store = createStore(
   combineReducers({
     filter: filter,
+		userId: userId,
     apollo: client.reducer(),
   }),
   {}, // initial state
