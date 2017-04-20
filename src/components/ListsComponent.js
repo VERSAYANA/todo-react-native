@@ -9,6 +9,7 @@ export default class ListsComponent extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+		console.log(this.props);
 
 	if (this.props.data.loading) {
 	return (<Text>Loading</Text>)
@@ -65,7 +66,7 @@ export default class ListsComponent extends React.Component {
           ref='create-list'
           underlineColorAndroid='#26C6DA'
 					onSubmitEditing={(v) => {this.props.createList({
-						variables: { title: v.nativeEvent.text },
+						variables: { title: v.nativeEvent.text, userId: this.props.screenProps },
 						optimisticResponse: {
 		          createList: {
 		            id: -1, // A temporary id. The server decides the real id.

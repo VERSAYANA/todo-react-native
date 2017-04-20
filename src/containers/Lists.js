@@ -4,8 +4,8 @@ import { gql, graphql, compose } from 'react-apollo';
 import ListsComponent from '../components/ListsComponent';
 
 
-const MyQuery = gql`query MyQuery($userId: String!){
-  User(auth0UserId: $userId) {
+const MyLists = gql`query MyLists($userId: ID!){
+  User(id: $userId) {
     lists {
       title
 			id
@@ -13,8 +13,8 @@ const MyQuery = gql`query MyQuery($userId: String!){
   }
 }`;
 
-const CreateNewList = gql`mutation createNewList($title: String!) {
-  createList(title: $title) {
+const CreateNewList = gql`mutation createNewList($title: String!, $userId: ID!) {
+  createList(title: $title, userId: $userId) {
     title
 		id
   }
@@ -28,7 +28,7 @@ const DeleteList = gql`mutation DeleteList($id: ID!) {
 
 
 export default compose(
-	graphql(MyQuery, {
+	graphql(MyLists, {
 		options: (props) => ({
 			variables: {
 				userId: props.screenProps
@@ -44,7 +44,10 @@ export default compose(
 
         return {
           ...previousData,
-          allLists: [...previousData.allLists,newList],
+					User: {
+						...previousData.User,
+						lists: [...previousData.User.lists,newList]
+					}
         };
       },
     },
@@ -58,7 +61,9 @@ export default compose(
 					const deletedList = mutationResult.data.deleteList;
 					return {
 						...previousData,
-						allLists: previousData.allLists.filter(l => l.title !== deletedList.title),
+						User: {
+							...previousData.User,
+						}
 					};
 				},
 			},

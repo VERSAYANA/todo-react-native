@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation'
+// import { StackNavigator } from 'react-navigation'
 import Main from './components/Main'
-
 import Login from './components/Login'
-import Lists from './containers/Lists'
-import Todos from './containers/Todos'
-import { gql, graphql, compose } from 'react-apollo';
+import SpecifyUser from './containers/SpecifyUser.js'
+// import Lists from './containers/Lists'
+// import Todos from './containers/Todos'
+// import { gql, graphql, compose } from 'react-apollo';
 // import Auth0Lock from 'react-native-lock';
-import {TouchableHighlight ,StyleSheet, Button, View, TouchableNativeFeedback, Text, ScrollView, TextInput } from 'react-native';
+// import {TouchableHighlight ,StyleSheet, Button, View, TouchableNativeFeedback, Text, ScrollView, TextInput } from 'react-native';
 import { connect } from "react-redux";
 
 
@@ -63,32 +63,39 @@ import { connect } from "react-redux";
 //   Lists: { screen: Lists },
 //   Todos: { screen: Todos }
 // })
+
+
 const mapStateToProps = (state, props) => ({
-	userId: state.userId
+	authId: state.userId.authId,
+	idToken: state.userId.idToken
 });
 
 
 const mapDispatchToProps = {
-  specifyUser: (userId) => ({
-    type: "SPECIFY_USER",
-		userId
-  })
+  loginAuth: (id) => ({
+    type: "AUTH_ID",
+		id
+  }),
+	loginId: (id) => ({
+		type: "ID_TOKEN",
+		id
+	})
 };
 
 
-let App = ({ userId, specifyUser }) => {
+let App = ({ authId, idToken, loginAuth, loginId }) => {
 	// console.log(props);
 	// return (<Text>gi</Text>)
-	if(userId === false) {
+	if(authId === false) {
 		return (
-			<Login specifyUser={specifyUser}/>
+			<Login loginAuth={loginAuth} loginId={loginId} />
+		)
+	} else {
+		return(
+			<SpecifyUser authId={authId} idToken={idToken}/>
 		)
 	}
-		else {
-			return (
-				<Main userId={userId}/>
-			)
-		}
+
 }
 
 App = connect(mapStateToProps, mapDispatchToProps)(App);
